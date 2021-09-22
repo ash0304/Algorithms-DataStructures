@@ -25,7 +25,7 @@ let result = same([1, 2, 3, 2], [9, 1, 4, 4]);
 console.log(result);
 
 // Refactored - Time complexity - O(n)
-// 解題思路: 透過物件特性去紀錄兩陣列元素出現次數，兩物件各自透過遍歷陣列賦值，最後退過遍歷 物件1 的key來排除不符合情況 
+// 解題思路: 透過物件特性去紀錄兩陣列元素出現次數，兩物件各自透過遍歷陣列賦值，最後退過遍歷 物件1 的key來排除不符合情況
 // 核心 -> value in object 可以直接確定該值是否為物件中的一個鍵, 也就不用使用indexOf去遍歷
 // 核心2 -> 透過比對兩物件鍵的值, 確定兩物件的對應二次方值出現次數一至, 也就不用使用splice去移除元素
 
@@ -60,3 +60,32 @@ function same2(arr1, arr2) {
 
 let result2 = same2([1, 2, 3, 2], [9, 1, 4, 4]);
 console.log(result2);
+
+// Challenge - Anagrams
+// Given two strings, write a function to determine if the second string is an anagram of the first.
+// An anagram is a word, phrase or name formed by rearranging the letters of another, such as cinema, formed from iceman.
+
+// Step 1. Understand Problem -> 編寫一個函式, 該函式有兩個字串為參數, 判斷 字串2 是否為 字串1 打亂後的字謎
+
+// 解題思路: 先判斷兩字串長度是否相等, 若不相等基本可以先排除, 利用物件紀錄兩字串內元素出現的次數, 透過遍歷比對兩物件, 判斷兩物件再相同鍵下的值是否相同
+
+function anagrams(str1, str2) {
+  let frequency1 = {};
+  let frequency2 = {};
+
+  for (let value of str1) {
+    frequency1[value] = (frequency1[value] || 0) + 1;
+  }
+  for (let value of str2) {
+    frequency2[value] = (frequency2[value] || 0) + 1;
+  }
+  for (let key in frequency1) {
+    if (!(key in frequency2)) return false;
+
+    if (frequency1[key] !== frequency2[key]) return false;
+  }
+  return true;
+}
+
+let result3 = anagrams('awesome', 'emosewa');
+console.log(result3);

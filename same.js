@@ -61,7 +61,29 @@ function same2(arr1, arr2) {
 let result2 = same2([1, 2, 3, 2], [9, 1, 4, 4]);
 console.log(result2);
 
-// Challenge - Anagrams
+function same3(arr1, arr2) {
+  if (arr1.length !== arr2.length) return false;
+
+  const lookup = {};
+
+  for (let val of arr2) {
+    lookup[val] = lookup[val] ? ++lookup[val] : 1;
+  }
+
+  for (let val of arr1) {
+    if (!lookup[val ** 2]) {
+      return false;
+    } else {
+      lookup[val ** 2] = --lookup[val ** 2];
+    }
+  }
+  return true;
+}
+
+let result5 = same3([1, 2, 3, 2], [9, 1, 4, 4]);
+console.log('challange solution', result5);
+
+// Challenge - Anagrams (自解) Time complexity - O(n)
 // Given two strings, write a function to determine if the second string is an anagram of the first.
 // An anagram is a word, phrase or name formed by rearranging the letters of another, such as cinema, formed from iceman.
 
@@ -89,3 +111,34 @@ function anagrams(str1, str2) {
 
 let result3 = anagrams('awesome', 'emosewa');
 console.log(result3);
+
+// 題解 - Time complexity - O(n)
+
+// 核心解法相同，同樣運用物件特性來記錄與比對, 但這邊其實只用了一個物件就能達成比對的功能, 占用較少的記憶體資源
+// 第一題same其實也可以用此法來寫
+
+function validAnagrams(first, second) {
+  // 先排除兩字串不同的狀況
+  if (first.length !== second.length) return false;
+  // 建立一物件用於紀錄
+  const lookup = {};
+
+  for (let val of first) {
+    // 紀錄數值於 lookup 物件, 並計算次數
+    lookup[val] = lookup[val] ? ++lookup[val] : 1;
+  }
+  // 遍歷 second 比對 first 紀錄的值
+  for (let val of second) {
+    // 若比對不成, 直接回傳false
+    if (!lookup[val]) {
+      return false;
+    } else {
+      // 計算過的, 次數需要減 1
+      lookup[val] = --lookup[val];
+    }
+  }
+  return true;
+}
+
+let result4 = validAnagrams('awesome', 'emosewa');
+console.log(result4);

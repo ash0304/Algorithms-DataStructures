@@ -21,3 +21,33 @@ function sumZero(sortArr) {
 
 const result = sumZero([-4, -3, -2, -1, 0, 1, 2, 5]);
 console.log(result);
+
+// Refactor - Time Complexity O(N) & Space Complexity O(1)
+
+// 解題思路 -> 透過設定首尾兩個 pointer 來定位, 使用 while 迴圈次次遍歷往內縮小範圍, 因為陣列式已經排列好的形式, 左至右一定是小到大
+// 若剛好相加等於 0 則回傳兩個 pointer 再陣列中各自代表的值(陣列形式)
+// 若不符合, 以 sum 的值作為判斷:
+// sum 大於 0 -> 代表右邊 pointer(right) 的值太大了相加仍大於 0 需要遞減
+// sum 小於 0 -> 代表左邊 pointer(right) 的值太小了相加仍小於 0 需要遞增
+
+function sumZero2(sortArr) {
+  // 定義兩個pointer座標index
+  let left = 0;
+  let right = sortArr.length - 1;
+  // 透過while迴圈判斷
+  while (left < right) {
+    // 建立總和變數, 方便判斷
+    let sum = sortArr[left] + sortArr[right];
+    if (sum === 0) {
+      return [sortArr[left], sortArr[right]];
+    } else if (sum > 0) {
+      // 透過總和大小判斷左右兩個pointer需要往內縮 eg. left++ or right--
+      right--;
+    } else {
+      left++;
+    }
+  }
+}
+
+const result2 = sumZero2([-4, -3, -2, -1, 0, 1, 2, 5]);
+console.log(result2);

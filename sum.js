@@ -51,3 +51,62 @@ function sumZero2(sortArr) {
 
 const result2 = sumZero2([-4, -3, -2, -1, 0, 1, 2, 5]);
 console.log(result2);
+
+// Challenge - countUniqueValues (自解) Time complexity - O(n) & Space complexity O(1)
+
+// implement a function called countUniqueValues, which accepts a sorted array, and counts the unique values in the array.
+// There can be negative numbers in the array, but it will always be sorted.
+
+// Understand Problem -> 編寫一個函式, 接受一個排列好的陣列做為參數, 接受負數為陣列元素, 但仍需要為排列好的陣列, 回傳總共出現幾個獨特數字的次數
+// 解題思路 -> 以 Two Pointers 方式解題, 設第一點為首點 i, 第二點為鄰近的下一點 j, 先排除空陣列的情況回傳 0, 透過 while 迴圈遍歷整個排列好的陣列
+// 固定 i 點、 j 點, 根據兩個位置的值相不相同來決定要移動的點, 若相同 -> j 遞增 i 不動, 若不同 -> i 遞增並將目前 i 點位置的值替換為目前 j 點位置的值
+// 最後因為有經過替換, 則從最開始到 i 點目前的陣列為排列好的陣列且不重複, 題目答案需要獨特數字出現的"次數", 這邊只要回傳 i + 1 就可以得到該次數 
+
+// 範例:
+
+//  i
+// [1, 1, 2, 3]
+//     j
+
+//  i
+// [1, 1, 2, 3]
+//        j
+
+//     i
+// [1, 2, 2, 3]
+//        j
+
+//     i
+// [1, 2, 2, 3]
+//           j
+
+//        i
+// [1, 2, 3, 3]
+//           j
+
+// 因為 j 到陣列尾部了, 當前 i 的 index 為 2 則計算目前 i + 1 即可以得出總共出現幾個獨特數字次數 
+
+function countUniqueValues(sortArr) {
+  // 先排除無元素
+  if (!sortArr.length) return 0;
+  // 先確定兩個 pointers
+  let i = 0;
+  let j = 1;
+  // 一點固定, 第二點往前遍歷
+  while (j < sortArr.length) {
+    // 碰到一樣的數字, 讓 j 點繼續移動
+    if (sortArr[i] === sortArr[j]) {
+      j++;
+    } else {
+      // 碰到不一樣的數字, 讓 i 點往前一格
+      i++;
+      // 並將這格替換為目前 j 點目前的值
+      sortArr[i] = sortArr[j];
+    }
+  }
+  // 回傳目前 i 的位置加1, 因為 i 為 index 從 0 開始算
+  return i + 1;
+}
+
+const result3 = countUniqueValues([-1, 1, 1, 2, 3, 3, 4, 4, 5, 6]);
+console.log(result3);

@@ -43,3 +43,13 @@ function areThereDuplicates1(arg1, arg2, arg3) {
 const result1 = areThereDuplicates1('a', 'b', 'c', 'a');
 console.log(result1);
 
+// 一行解法
+// 解題思路 - 自己一開始知道的方法, 透過 Set 的資料不會有重複的特性去解決問題
+// Set特性中屬性為唯一, 所以使用 Set 的 size 來與 arguments 的 length 做比較, 如果不同 -> 代表有重複, 回傳 true, 反之回傳 false
+
+function areThereDuplicates2(arg1, arg2, arg3) {
+  return new Set(arguments).size !== arguments.length;
+}
+
+const result2 = areThereDuplicates2('a', 'b', 'c', 'a');
+console.log(result2);

@@ -24,7 +24,7 @@ const result = areThereDuplicates(1, 1, 3);
 console.log(result);
 
 // mutiple pointers pattern solution
-// 解題思路 - 用兩個 pointers 的方式去倆倆比對, 過程中遇到卡很久的問題出在sort()這個原型方法
+// 解題思路 - 用兩個 pointers 的方式去倆倆比對, 需要先排序能將有重複的原素排在一起, 在兩兩比對過程中就會被篩出, 過程中遇到卡很久的問題出在sort()這個原型方法
 // 因為給定測驗的 input 中有字串, 原寫法: sort((a, b) => a - b) 指對數字生效排序, 字串 input: 'a', 'b', 'c', 'a' 卻不生效, 導致卡了很久
 // 後來只能使用 default 的 sort() 不加參數, 完成正常的由小到大排列
 
